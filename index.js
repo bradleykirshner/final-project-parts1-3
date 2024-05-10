@@ -140,6 +140,27 @@ app.delete("/rooms/:id", async (req, res) => {
   }
 });
 
+// PATCH (partial update) a room by ID
+app.patch("/rooms/:id", async (req, res) => {
+  try {
+    const db = client.db(dbName);
+    const collection = db.collection(roomsCollection);
+    const result = await collection.updateOne(
+      { _id: new ObjectId(req.params.id) },
+      { $set: req.body } // Set the fields provided in the request body
+    );
+    if (result.modifiedCount > 0) {
+      res.status(200).json({ message: "Room successfully updated" });
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running at: http://localhost:${port}`);
