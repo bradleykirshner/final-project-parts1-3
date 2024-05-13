@@ -278,8 +278,8 @@ async function handleUserInput() {
         await createRoom(JSON.parse(data1));
         break;
       case 4:
-        let id1 = await askQuestion("Enter the room ID:");
-        let data = await askQuestion("Enter data in JSON format:");
+        let id1 = await askQuestion("Enter the room ID: ");
+        let data = await askQuestion("Enter room data (JSON format): ");
         await updateRoomById(id1, JSON.parse(data));
         break;
       case 5:
